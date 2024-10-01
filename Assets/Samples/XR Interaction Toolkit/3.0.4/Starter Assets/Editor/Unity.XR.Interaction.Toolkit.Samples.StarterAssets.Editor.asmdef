@@ -5,7 +5,21 @@
         "Unity.XR.Interaction.Toolkit",
         "Unity.XR.Interaction.Toolkit.Editor",
         "Unity.XR.CoreUtils",
-        "Unity.XR.CoreUtils.Editor"
+        "Unity.XR.CoreUtils.Editor",
+        "Unity.Burst",
+        "Unity.InputSystem",
+        "Unity.Mathematics",
+        "Unity.RenderPipeline.Universal.ShaderLibrary",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Config.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Unity.XR.ARFoundation",
+        "Unity.XR.ARFoundation.InternalUtils",
+        "Unity.XR.ARSubsystems",
+        "Unity.XR.Management",
+        "Unity.XR.Simulation",
+        "UnityEngine.SpatialTracking",
+        "UnityEngine.XR.LegacyInputHelpers"
     ],
     "includePlatforms": [
         "Editor"

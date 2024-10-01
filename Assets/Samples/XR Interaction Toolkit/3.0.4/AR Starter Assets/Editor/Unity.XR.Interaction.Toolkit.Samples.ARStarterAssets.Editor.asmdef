@@ -3,7 +3,9 @@
     "rootNamespace": "",
     "references": [
         "Unity.XR.CoreUtils",
-        "Unity.XR.CoreUtils.Editor"
+        "Unity.XR.CoreUtils.Editor",
+        "Unity.InputSystem",
+        "UnityEngine.SpatialTracking"
     ],
     "includePlatforms": [
         "Editor"
