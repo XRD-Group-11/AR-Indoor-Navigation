@@ -39,15 +39,33 @@ public class ARCameraCalibrationWithWorldPosition : MonoBehaviour
     // Calibrate the camera position and rotation based on the QR code
     private void CalibrateCamera(ARTrackedImage trackedImage)
     {
+        // Get the position and rotation of the detected QR code in AR space
         Vector3 detectedQrPosition = trackedImage.transform.position;
         Quaternion detectedQrRotation = trackedImage.transform.rotation;
 
+        // Calculate the position and rotation offsets
         Vector3 positionOffset = qrCodeRealWorldPosition - detectedQrPosition;
         Quaternion rotationOffset = qrCodeRealWorldRotation * Quaternion.Inverse(detectedQrRotation);
 
-        arSessionOrigin.transform.position += positionOffset;
-        arSessionOrigin.transform.rotation = rotationOffset * arSessionOrigin.transform.rotation;
+        // Smoothing factors to reduce jitter (adjust values based on your preference)
+        float positionSmoothingFactor = 0.1f;
+        float rotationSmoothingFactor = 0.1f;
 
-        Debug.Log(detectedQrPosition);
-    }
+        // Position threshold to determine if the movement is significant
+        float positionThreshold = 0.01f;  // Minimum movement in meters to trigger updates
+        float rotationThreshold = 1f;     // Minimum rotation change in degrees to trigger updates
+
+        // Apply position and rotation updates only if they exceed the defined threshold
+        if (Vector3.Distance(arSessionOrigin.transform.position, positionOffset) > positionThreshold ||
+            Quaternion.Angle(arSessionOrigin.transform.rotation, rotationOffset * arSessionOrigin.transform.rotation) > rotationThreshold)
+        {
+            // Smoothly interpolate the camera's position
+            arSessionOrigin.transform.position = Vector3.Lerp(arSessionOrigin.transform.position, positionOffset, positionSmoothingFactor);
+
+            // Smoothly interpolate the camera's rotation
+            arSessionOrigin.transform.rotation = Quaternion.Slerp(arSessionOrigin.transform.rotation, rotationOffset * arSessionOrigin.transform.rotation, rotationSmoothingFactor);
+        }
+
+        Debug.Log("Calibrated Position: " + arSessionOrigin.transform.position);
+    } 
 }
