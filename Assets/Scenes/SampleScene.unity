@@ -422,7 +422,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.27408913, z: -0, w: 0.9617043}
   m_LocalPosition: {x: -27.33, y: 0.95, z: -26.33}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1285,13 +1285,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1438635956}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 0.92658937, z: -0, w: 0.37607473}
+  m_LocalPosition: {x: 8.16, y: 0, z: -4.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1953620483}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 135.819, z: 0}
 --- !u!114 &1438635958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1714,14 +1714,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1837318827}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0007035193, y: 0.9263335, z: 0.000009694865, w: 0.37670386}
-  m_LocalPosition: {x: -3.64, y: 1, z: -29.87}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -29.05, y: 1, z: -22.48}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1953620483}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -0.031, y: 135.741, z: -0.074}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1837318834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1751,6 +1751,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arSessionOrigin: {fileID: 1837318831}
+  arCamera: {fileID: 1438635962}
   qrCodeRealWorldPosition: {x: -27.33, y: 0.95, z: -26.33}
   qrCodeRealWorldRotation: {x: 0, y: -0.27446276, z: 0, w: 0.96159774}
 --- !u!1 &1867620422

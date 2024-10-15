@@ -7,6 +7,7 @@ public class ARCameraCalibrationWithWorldPosition : MonoBehaviour
 {
     private ARTrackedImageManager _trackedImageManager;
     public XROrigin arSessionOrigin; 
+    public Camera arCamera;
 
 
     public Vector3 qrCodeRealWorldPosition = new Vector3(0, 0, 0); // In meters
@@ -36,36 +37,30 @@ public class ARCameraCalibrationWithWorldPosition : MonoBehaviour
         }
     }
 
-    // Calibrate the camera position and rotation based on the QR code
     private void CalibrateCamera(ARTrackedImage trackedImage)
     {
-        // Get the position and rotation of the detected QR code in AR space
         Vector3 detectedQrPosition = trackedImage.transform.position;
         Quaternion detectedQrRotation = trackedImage.transform.rotation;
+        
+        Vector3 cameraPosition = arCamera.transform.position;
+        Quaternion cameraRotation = arCamera.transform.rotation;
+        
+        Vector3 relativePosition = detectedQrPosition - cameraPosition;
+        Quaternion relativeRotation = detectedQrRotation * Quaternion.Inverse(cameraRotation);
 
-        // Calculate the position and rotation offsets
-        Vector3 positionOffset = qrCodeRealWorldPosition - detectedQrPosition;
-        Quaternion rotationOffset = qrCodeRealWorldRotation * Quaternion.Inverse(detectedQrRotation);
+
+        Vector3 positionOffset = qrCodeRealWorldPosition - relativePosition - arSessionOrigin.Camera.transform.localPosition;
+        Quaternion rotationOffset = qrCodeRealWorldRotation * relativeRotation;
 
         // Smoothing factors to reduce jitter (adjust values based on your preference)
-        float positionSmoothingFactor = 0.1f;
-        float rotationSmoothingFactor = 0.1f;
+        float positionSmoothingFactor = 0.25f;
 
-        // Position threshold to determine if the movement is significant
         float positionThreshold = 0.01f;  // Minimum movement in meters to trigger updates
-        float rotationThreshold = 1f;     // Minimum rotation change in degrees to trigger updates
 
-        // Apply position and rotation updates only if they exceed the defined threshold
-        if (Vector3.Distance(arSessionOrigin.transform.position, positionOffset) > positionThreshold ||
-            Quaternion.Angle(arSessionOrigin.transform.rotation, rotationOffset * arSessionOrigin.transform.rotation) > rotationThreshold)
+        if (Vector3.Distance(arSessionOrigin.transform.position, positionOffset) > positionThreshold)
         {
-            // Smoothly interpolate the camera's position
             arSessionOrigin.transform.position = Vector3.Lerp(arSessionOrigin.transform.position, positionOffset, positionSmoothingFactor);
-
-            // Smoothly interpolate the camera's rotation
-            arSessionOrigin.transform.rotation = Quaternion.Slerp(arSessionOrigin.transform.rotation, rotationOffset * arSessionOrigin.transform.rotation, rotationSmoothingFactor);
         }
-
-        Debug.Log("Calibrated Position: " + arSessionOrigin.transform.position);
+            arSessionOrigin.Camera.transform.LookAt(qrCodeRealWorldPosition);
     } 
 }
